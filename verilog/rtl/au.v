@@ -27,14 +27,12 @@
 `define		ALU_PCNTC	4'b1110
 `define		ALU_RND		4'b1111
 
-module au(a,b,clk,arith_op,carry,o,rndin);
+module au(a,b,arith_op,carry,o,rndin);
 	// Inputs
 	input	[31:0]	a;
 	wire	[31:0]	a;
 	input	[31:0]	b;
 	wire	[31:0]	b;
-	input			clk;
-	wire			clk;
 	input	[3:0]	arith_op;
 	wire	[3:0]	arith_op;
 	input	[31:0]	rndin;
@@ -91,9 +89,7 @@ module au(a,b,clk,arith_op,carry,o,rndin);
 			a_chg[0] = a[1] ^^ a[0];
 		end
 
-// TODO
-//	always @ (posedge clk)
-//		rnd = rndin;
+	// TODO: Random Number Generator
 
 	always @ (arith_op || a || b) // Main Operation
 		case (arith_op)
@@ -147,8 +143,6 @@ module au(a,b,clk,arith_op,carry,o,rndin);
 			end
 			`ALU_RND : // Random
 				o = rnd;
-			default : // BAD NEWS
-				o = 8'h4655434B; // Random data for have fun ;)
 		endcase
 
 	function [5:0] PopCntO4; // One Count
